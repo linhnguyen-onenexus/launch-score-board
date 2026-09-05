@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Production Launch Scoreboard — Mon 07 Sep</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f1a24;
+      --panel:#16232f;
+      --panel-edge:#22323f;
+      --ink:#e8eef2;
+      --muted:#8aa0ae;
+      --done:#2fbf71;
+      --low:#3ec6c0;
+      --med:#f5a623;
+      --high:#f04e45;
+      --nb:#94a3b8;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{background:var(--bg);color:var(--ink);font-family:'Archivo',system-ui,sans-serif}
+    body{padding:28px 36px 40px}
+
+    /* ---------- Header ---------- */
+    header{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+    .title h1{font-size:34px;font-weight:800;letter-spacing:-.5px;line-height:1.1}
+    .title .sub{display:flex;align-items:center;gap:12px;flex-wrap:wrap;color:var(--ink);font-size:17px;margin-top:10px;font-weight:600}
+    .title .golive{display:inline-flex;align-items:center;gap:8px;background:rgba(62,198,192,.14);border:1px solid rgba(62,198,192,.55);color:var(--low);padding:6px 14px;border-radius:99px;font-weight:800;font-size:17px;letter-spacing:.2px}
+    .title .golive::before{content:'';width:9px;height:9px;border-radius:50%;background:var(--low);box-shadow:0 0 0 0 rgba(62,198,192,.6);animation:golive-pulse 2s ease-in-out infinite}
+    @keyframes golive-pulse{0%,100%{box-shadow:0 0 0 0 rgba(62,198,192,.6)}50%{box-shadow:0 0 0 6px rgba(62,198,192,0)}}
+    .title .livenote{color:var(--muted);font-weight:600}
+    .clockbox{text-align:right}
+    .countdown{display:flex;align-items:baseline;gap:4px;font-size:44px;font-weight:800;letter-spacing:-1px;font-variant-numeric:tabular-nums;line-height:1}
+    .countdown .seg{display:inline-flex;align-items:baseline;gap:3px}
+    .countdown .n{min-width:2ch;text-align:right}
+    .countdown .seg-h .n{color:#a78bfa}
+    .countdown .seg-m .n{color:#38bdf8}
+    .countdown .seg-s .n{color:var(--low)}
+    .countdown .seg-h .u{color:#a78bfa99}
+    .countdown .seg-m .u{color:#38bdf899}
+    .countdown .seg-s .u{color:#3ec6c099}
+    .countdown .u{font-size:28px;font-weight:700;color:var(--muted);letter-spacing:0}
+    .countdown .sep{color:var(--muted);font-size:34px;font-weight:600;padding:0 6px;position:relative;top:-3px}
+    .countdown.soon .n{color:var(--med)}
+    .countdown.urgent .n{color:var(--high)}
+    .countdown.live .n{color:var(--done)}
+    .countdown.soon .u,.countdown.urgent .u,.countdown.live .u{color:var(--muted)}
+    .clockbox .cd-label{color:var(--muted);font-size:14px;margin-top:4px;font-weight:500}
+
+    /* ---------- Summary strip ---------- */
+    .summary{display:flex;align-items:stretch;gap:14px;margin:26px 0 10px;flex-wrap:wrap}
+    .stat{background:var(--panel);border:1px solid var(--panel-edge);border-radius:10px;padding:14px 22px;min-width:150px;cursor:default}
+    .stat .num{font-size:38px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.05}
+    .stat .lbl{font-size:14px;color:var(--muted);font-weight:600;margin-top:2px}
+    .stat.s-done .num{color:var(--done)}
+    .stat.s-low .num{color:var(--low)}
+    .stat.s-med .num{color:var(--med)}
+    .stat.s-high .num{color:var(--high)}
+    .stat.s-nb .num{color:var(--nb)}
+    .stat.progress{flex:1;min-width:260px;display:flex;flex-direction:column;justify-content:center}
+    .bar{height:14px;border-radius:7px;background:#0b131b;overflow:hidden;margin-top:10px;border:1px solid var(--panel-edge)}
+    .bar > i{display:block;height:100%;background:var(--done);width:0%;transition:width .4s ease;border-radius:7px}
+    .progress .num-row{display:flex;justify-content:space-between;align-items:baseline}
+    .progress .pct{font-size:30px;font-weight:800;color:var(--done);font-variant-numeric:tabular-nums}
+
+    /* ---------- Legend ---------- */
+    .legend{display:flex;gap:26px;flex-wrap:wrap;margin:14px 0 24px;padding:12px 18px;background:var(--panel);border:1px solid var(--panel-edge);border-radius:10px}
+    .legend .key{display:flex;align-items:baseline;gap:9px;font-size:14px}
+    .legend .swatch{width:12px;height:12px;border-radius:3px;flex:none;position:relative;top:1px}
+    .legend b{font-weight:700;font-size:15px}
+    .legend span{color:var(--muted)}
+    .k-done .swatch{background:var(--done)} .k-low .swatch{background:var(--low)}
+    .k-med .swatch{background:var(--med)}   .k-high .swatch{background:var(--high)}
+    .k-nb .swatch{background:var(--nb)}
+
+    /* ---------- Alert banner (visible only when High Risk exists) ---------- */
+    .alert{display:none;margin:0 0 20px;padding:12px 18px;border-radius:10px;border:1px solid rgba(240,78,69,.55);background:rgba(240,78,69,.12);font-size:16px;font-weight:600}
+    .alert.on{display:block}
+    .alert b{color:var(--high)}
+
+    /* ---------- Board ---------- */
+    .board{display:flex;flex-direction:column;gap:34px}
+    .group-title{display:flex;align-items:center;gap:12px;font-size:14px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+    .group-title::after{content:'';flex:1;height:1px;background:var(--panel-edge)}
+    .group-title .cnt{font-weight:800;letter-spacing:0;text-transform:none;font-size:13.5px;padding:2px 10px;border-radius:99px;border:1px solid}
+    .grid{display:grid;grid-template-columns:repeat(5,1fr);gap:22px}
+    @media (max-width:1300px){.grid{grid-template-columns:repeat(4,1fr)}}
+    @media (max-width:1050px){.grid{grid-template-columns:repeat(3,1fr)}}
+    @media (max-width:800px){.grid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:540px){.grid{grid-template-columns:1fr}}
+    .card{background:var(--panel);border:1px solid var(--panel-edge);border-left:5px solid var(--panel-edge);border-radius:10px;padding:16px 16px 12px}
+    .card.worst-done{border-left-color:var(--done)}
+    .card.worst-low{border-left-color:var(--low)}
+    .card.worst-med{border-left-color:var(--med)}
+    .card.worst-high{border-left-color:var(--high)}
+    .card.worst-nb{border-left-color:var(--nb)}
+    .card-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:10px}
+    .card-head h2{font-size:19px;font-weight:700;letter-spacing:-.2px}
+    .owner{font-size:13px;font-weight:600;color:var(--muted);background:#0b131b;border:1px solid var(--panel-edge);padding:3px 9px;border-radius:99px;white-space:nowrap}
+    .item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:7px 0;border-top:1px solid #1d2c38;font-size:14.5px;font-weight:500}
+    .item:first-of-type{border-top:none}
+
+    .badge{font-size:12.5px;font-weight:700;padding:4px 10px;border-radius:6px;border:none;cursor:pointer;font-family:inherit;letter-spacing:.2px;white-space:nowrap}
+    .badge:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+    .b-done{background:var(--done);color:#04150c}
+    .b-low{background:rgba(62,198,192,.16);color:var(--low);box-shadow:inset 0 0 0 1.5px var(--low)}
+    .b-med{background:rgba(245,166,35,.16);color:var(--med);box-shadow:inset 0 0 0 1.5px var(--med)}
+    .b-high{background:var(--high);color:#fff}
+    .b-nb{background:rgba(148,163,184,.14);color:var(--nb);box-shadow:inset 0 0 0 1.5px rgba(148,163,184,.6)}
+    @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(240,78,69,.55)}50%{box-shadow:0 0 0 7px rgba(240,78,69,0)}}
+    .b-high{animation:pulse 2s ease-in-out infinite}
+    @media (prefers-reduced-motion: reduce){.b-high{animation:none}.bar > i{transition:none}.title .golive::before{animation:none}}
+
+    /* ---------- Footer ---------- */
+    footer{margin-top:26px;display:flex;justify-content:space-between;align-items:center;gap:16px;color:var(--muted);font-size:14px;flex-wrap:wrap}
+    .upd{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+    .upd b{color:var(--ink)}
+    .btn{background:#0b131b;border:1px solid var(--panel-edge);color:var(--ink);font-family:inherit;font-weight:600;font-size:13.5px;padding:7px 14px;border-radius:8px;cursor:pointer}
+    .btn:hover{border-color:var(--muted)}
+    #sync.ok{color:var(--done)} #sync.busy{color:var(--med)} #sync.err{color:var(--high)}
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="title">
+    <h1>Production Launch Scoreboard</h1>
+    <div class="sub"><span class="golive">Go-live Monday 07 Sep, 12:00</span><span id="sync" class="livenote">Loading board…</span></div>
+  </div>
+  <div class="clockbox">
+    <div class="countdown" id="countdown">—</div>
+    <div class="cd-label">until go-live</div>
+  </div>
+</header>
+
+<div class="summary">
+  <div class="stat progress">
+    <div class="num-row"><span class="lbl" style="font-size:15px">Overall — blocking items done</span><span class="pct" id="pct">0%</span></div>
+    <div class="bar"><i id="bar"></i></div>
+  </div>
+  <div class="stat s-done"><div class="num" id="n-done">0</div><div class="lbl">Done</div></div>
+  <div class="stat s-low"><div class="num" id="n-low">0</div><div class="lbl">Low Risk</div></div>
+  <div class="stat s-med"><div class="num" id="n-med">0</div><div class="lbl">Medium Risk</div></div>
+  <div class="stat s-high"><div class="num" id="n-high">0</div><div class="lbl">High Risk</div></div>
+  <div class="stat s-nb"><div class="num" id="n-nb">0</div><div class="lbl">Not Blocker</div></div>
+</div>
+
+<div class="legend">
+  <div class="key k-done"><i class="swatch"></i><div><b>Done</b> <span>— complete and verified. Nothing left before launch.</span></div></div>
+  <div class="key k-low"><i class="swatch"></i><div><b>Low Risk</b> <span>— on track. Minor work remains, no blockers, will make Monday.</span></div></div>
+  <div class="key k-med"><i class="swatch"></i><div><b>Medium Risk</b> <span>— open issues or uncertainty. Needs attention to make Monday.</span></div></div>
+  <div class="key k-high"><i class="swatch"></i><div><b>High Risk</b> <span>— blocked or broken. Launch in danger; escalate now.</span></div></div>
+  <div class="key k-nb"><i class="swatch"></i><div><b>Not Launch Blocker</b> <span>— deferred. Can ship after Monday; excluded from the progress bar.</span></div></div>
+</div>
+
+<div class="alert" id="alert"></div>
+
+<div class="board" id="board"></div>
+
+<footer>
+  <div class="upd">
+    <span>Click any badge to cycle its status</span>
+    <button class="btn" id="snapshot">Snapshot data.json</button>
+    <button class="btn" id="edit-btn">Enable editing</button>
+  </div>
+</footer>
+
+<script>
+  /* =========================================================
+     LIVE SYNC — the board state lives in data.json inside the
+     GitHub repo below. Badge clicks auto-commit via the GitHub
+     API (needs a token; click "Enable editing" once per
+     browser). Every open copy polls for changes every 2 min.
+     ========================================================= */
+  const CONFIG = {
+    repo:   'linhnguyen-onenexus/launch-score-board',
+    branch: 'main',
+    dataPath: 'data.json',
+    pollMs: 10000,      // with a token: 360 calls/hour against a 5,000/hour ceiling
+    pollMsAnon: 90000,  // no token: 40 calls/hour against GitHub's 60/hour anonymous cap
+  };
+  const GO_LIVE = new Date('2026-09-07T12:00:00+07:00');
+
+  /* Fallback board, used until data.json exists in the repo.
+     Valid statuses: 'done' | 'low' | 'med' | 'high' */
+  const DEFAULT_BOARD = [
+    { name:'Argo CD', owner:'Linh Nguyen', group:'Infrastructure', items:[
+        ['Production deployment','done'], ['Domain mapping','done'] ]},
+    { name:'K8s Cluster', owner:'Linh Nguyen', group:'Infrastructure', items:[
+        ['Production deployment','done'], ['Logs / Metrics / Alerts','done'] ]},
+    { name:'CNPG', owner:'Linh Nguyen', group:'Infrastructure', items:[
+        ['Production deployment','done'], ['Logs / Metrics / Alerts','done'], ['Data persistency','done'] ]},
+    { name:'Ceph', owner:'Xuan Son', group:'Infrastructure', items:[
+        ['Production deployment','done'], ['Logs / Metrics / Alerts','low'], ['Data persistency','low'], ['Domain mapping','low'] ]},
+    { name:'Monitoring', owner:'Hoang Bui', group:'Infrastructure', items:[
+        ['Production deployment','done'], ['Functionality','done'], ['CI/CD','done'], ['Domain mapping','done'], ['Data persistency','done'], ['Platform integration','done'] ]},
+    { name:'MLOps — Inference', owner:'Linh Nguyen', group:'Services', items:[
+        ['Functionality','done'], ['Logs / Metrics / Alerts','done'], ['Security','done'] ]},
+    { name:'MLOps — Training', owner:'Hoang Bui', group:'Services', items:[
+        ['Functionality','done'], ['Logs / Metrics / Alerts','done'], ['Security','done'] ]},
+    { name:'MLOps — Shared', owner:'Hoang Bui', group:'Services', items:[
+        ['Production deployment','done'], ['Logs / Metrics / Alerts','low'], ['CI/CD','done'], ['Domain mapping','done'], ['Platform integration','done'] ]},
+    { name:'Inference Models', owner:'MLOps Team', group:'Services', items:[
+        ['GLM 5.3 MXFP4','done'], ['DeepSeek V4 Flash','done'] ]},
+    { name:'CAS', owner:'Huy', group:'Services', items:[
+        ['Production deployment','done'], ['Functionality','done'], ['Logs / Metrics / Alerts','low'], ['CI/CD','low'], ['Domain mapping','done'], ['Platform integration','done'] ]},
+    { name:'Landing App', owner:'Duy Hoang', group:'Front-End Apps', items:[
+        ['Production deployment','done'], ['Content','low'], ['CI/CD','done'], ['Domain mapping','done'], ['Security','low'] ]},
+    { name:'Support App', owner:'Duy Hoang', group:'Front-End Apps', items:[
+        ['Production deployment','done'], ['Functionality','low'], ['CI/CD','done'], ['Domain mapping','done'], ['Security','low'] ]},
+    { name:'Console App', owner:'Duy Hoang', group:'Front-End Apps', items:[
+        ['Production deployment','done'], ['Functionality','low'], ['CI/CD','done'], ['Domain mapping','done'], ['Security','low'] ]},
+    { name:'Nexus Composer', owner:'Loc Mai', group:'Front-End Apps', items:[
+        ['Functionality','low'], ['Desktop app release','low'], ['Logs / Metrics / Alerts','done'] ]},
+  ];
+
+  const STATUS = {
+    nb:  {label:'Not Blocker', cls:'b-nb',   rank:-1},
+    done:{label:'Done',        cls:'b-done', rank:0},
+    low: {label:'Low Risk',    cls:'b-low',  rank:1},
+    med: {label:'Med Risk',    cls:'b-med',  rank:2},
+    high:{label:'High Risk',   cls:'b-high', rank:3},
+  };
+  /* Click cycle order. 'nb' sits last so the common statuses stay one click apart. */
+  const ORDER = ['done','low','med','high','nb'];
+  const GROUPS = ['Infrastructure', 'Services', 'Front-End Apps'];
+  const GROUP_COLORS = {
+    'Infrastructure': '#a78bfa',
+    'Services':       '#38bdf8',
+    'Front-End Apps': '#3ec6c0',
+  };
+  /* Group lookup: explicit comp.group, else the built-in default for that name */
+  const DEFAULT_GROUP = Object.fromEntries(DEFAULT_BOARD.map(c => [c.name, c.group]));
+  const groupOf = comp => comp.group || DEFAULT_GROUP[comp.name] || 'Other';
+  /* Board entries grouped in GROUPS order; unknown groups appended at the end */
+  function groupedBoard(){
+    const seen = [...GROUPS];
+    state.board.forEach(c => { if(!seen.includes(groupOf(c))) seen.push(groupOf(c)); });
+    return seen.map(g => ({ group:g, comps: state.board.map((c,ci)=>({c,ci})).filter(x => groupOf(x.c)===g) }))
+               .filter(g => g.comps.length);
+  }
+  const OWNER_COLORS = {
+    'Linh Nguyen': '#a78bfa',
+    'Loc Mai':     '#f472b6',
+    'Xuan Son':    '#38bdf8',
+    'Hoang Bui':   '#fb923c',
+    'Huy':         '#a3e635',
+    'Duy Hoang':   '#fde047',
+    'MLOps Team':  '#fb7185',
+  };
+
+  let state = { updatedAt: null, board: JSON.parse(JSON.stringify(DEFAULT_BOARD)) };
+
+  let token = null;
+  try { token = localStorage.getItem('board-token'); } catch(e) {}
+  let dirty = false;
+  let saveTimer = null;
+  let saving = false;     // a PUT is in flight
+  let saveAgain = false;  // clicks arrived while saving — run once more after
+  const SAVE_DEBOUNCE_MS = 2500;
+
+  /* ---------- Rendering ---------- */
+  function ownerChip(name){
+    const c = OWNER_COLORS[name] || '#8aa0ae';
+    return `<span class="owner" style="color:${c};border-color:${c}55;background:${c}1a">${name}</span>`;
+  }
+
+  function render(){
+    const boardEl = document.getElementById('board');
+    boardEl.innerHTML = '';
+    const counts = {done:0,low:0,med:0,high:0,nb:0};
+    const highItems = [];
+
+    groupedBoard().forEach(({group, comps})=>{
+      const section = document.createElement('section');
+      section.className = 'group';
+      const gc = GROUP_COLORS[group] || '#8aa0ae';
+      section.innerHTML = `<h3 class="group-title"><span style="color:${gc}">${group}</span><span class="cnt" style="color:${gc};border-color:${gc}66;background:${gc}1f">${comps.length}</span></h3>`;
+      const grid = document.createElement('div');
+      grid.className = 'grid';
+      comps.forEach(({c:comp, ci})=>{
+        const card = document.createElement('div');
+        let worstRank = -Infinity, worstKey = 'nb';
+        const head = `<div class="card-head"><h2>${comp.name}</h2>${ownerChip(comp.owner)}</div>`;
+        const rows = comp.items.map((it,ii)=>{
+          const [label,st] = it;
+          counts[st]++;
+          if(STATUS[st].rank > worstRank){ worstRank = STATUS[st].rank; worstKey = st; }
+          if(st==='high') highItems.push(`${comp.name} · ${label}`);
+          return `<div class="item"><span>${label}</span>
+          <button class="badge ${STATUS[st].cls}" data-ci="${ci}" data-ii="${ii}"
+            aria-label="${comp.name} ${label}: ${STATUS[st].label}. Click to change.">${STATUS[st].label}</button></div>`;
+        }).join('');
+        card.className = 'card worst-' + worstKey;
+        card.innerHTML = head + rows;
+        grid.appendChild(card);
+      });
+      section.appendChild(grid);
+      boardEl.appendChild(section);
+    });
+
+    /* 'Not Blocker' items are deferred work, so they stay out of the launch-readiness
+       percentage; counting them would understate how ready Monday actually is. */
+    const blocking = counts.done+counts.low+counts.med+counts.high;
+    const pct = blocking ? Math.round(100*counts.done/blocking) : 0;
+    document.getElementById('n-done').textContent = counts.done;
+    document.getElementById('n-low').textContent  = counts.low;
+    document.getElementById('n-med').textContent  = counts.med;
+    document.getElementById('n-high').textContent = counts.high;
+    document.getElementById('n-nb').textContent   = counts.nb;
+    document.getElementById('pct').textContent = pct + '%';
+    document.getElementById('bar').style.width = pct + '%';
+
+    const alert = document.getElementById('alert');
+    if(highItems.length){
+      alert.className = 'alert on';
+      alert.innerHTML = `<b>${highItems.length} high-risk item${highItems.length>1?'s':''}:</b> ${highItems.join(' &nbsp;•&nbsp; ')}`;
+    } else {
+      alert.className = 'alert';
+    }
+    stampFromState();
+  }
+
+  function fmt(d){
+    return d.toLocaleString('en-GB',{weekday:'short',hour:'2-digit',minute:'2-digit'});
+  }
+  function stampFromState(){ /* no timestamp shown — board is live */ }
+  function setSync(msg, cls){
+    const el = document.getElementById('sync');
+    el.textContent = msg;
+    el.className = 'livenote' + (cls ? ' ' + cls : '');
+  }
+
+  /* ---------- GitHub sync ---------- */
+  const API = `https://api.github.com/repos/${CONFIG.repo}/contents/${CONFIG.dataPath}`;
+
+  function authHeaders(){
+    const h = { 'Accept': 'application/vnd.github+json' };
+    if(token) h['Authorization'] = 'Bearer ' + token;
+    return h;
+  }
+  function b64encode(str){
+    const bytes = new TextEncoder().encode(str);
+    let bin = '';
+    bytes.forEach(b => bin += String.fromCharCode(b));
+    return btoa(bin);
+  }
+  function b64decode(b64){
+    const bin = atob(b64.replace(/\n/g,''));
+    const bytes = Uint8Array.from(bin, c=>c.charCodeAt(0));
+    return new TextDecoder().decode(bytes);
+  }
+
+  /* ETag of the last data.json we saw. Polling sends it back as If-None-Match so
+     unchanged polls come back as a tiny 304 instead of the full file. */
+  let lastEtag = null;
+
+  async function fetchRemote({ conditional = false } = {}){
+    const headers = authHeaders();
+    if(conditional && lastEtag) headers['If-None-Match'] = lastEtag;
+    const r = await fetch(`${API}?ref=${CONFIG.branch}`, { headers, cache:'no-store' });
+    if(r.status === 304) return { unchanged:true };
+    if(r.status === 404) return { missing:true };
+    if(!r.ok){
+      const err = new Error('HTTP ' + r.status);
+      err.status = r.status;
+      err.rateLimited = r.status === 403 && r.headers.get('X-RateLimit-Remaining') === '0';
+      err.resetAt = Number(r.headers.get('X-RateLimit-Reset')) * 1000 || 0;
+      throw err;
+    }
+    lastEtag = r.headers.get('ETag') || lastEtag;
+    const meta = await r.json();
+    return { sha: meta.sha, data: JSON.parse(b64decode(meta.content)) };
+  }
+
+  async function loadBoard(){
+    try{
+      const remote = await fetchRemote();
+      if(remote.missing){
+        setSync('Live file not created yet — first save will create it', 'busy');
+      } else {
+        state = remote.data;
+        setSync('Live · synced', 'ok');
+      }
+    } catch(e){
+      setSync('Offline — showing built-in data', 'err');
+    }
+    render();
+  }
+
+  async function putOnce(){
+    let sha = null;
+    try{
+      const remote = await fetchRemote();
+      if(!remote.missing) sha = remote.sha;
+    } catch(e){}
+    state.updatedAt = new Date().toISOString();
+    const body = {
+      message: 'Scoreboard update ' + state.updatedAt,
+      content: b64encode(JSON.stringify(state, null, 2)),
+      branch: CONFIG.branch,
+    };
+    if(sha) body.sha = sha;
+    const r = await fetch(API, { method:'PUT', headers:{...authHeaders(),'Content-Type':'application/json'}, body: JSON.stringify(body) });
+    if(!r.ok){
+      let msg = '';
+      try { msg = (await r.json()).message || ''; } catch(e){}
+      throw new Error(r.status + (msg ? ' — ' + msg : ''));
+    }
+  }
+
+  async function save(){
+    if(!token){
+      setSync('Read-only — click "Enable editing" to save changes', 'err');
+      return;
+    }
+    if(saving){ saveAgain = true; return; }   // one PUT at a time; rerun after
+    saving = true;
+    setSync('Saving…', 'busy');
+    try{
+      try{
+        await putOnce();
+      } catch(e){
+        // 409 = someone else saved between our sha fetch and PUT; refetch sha and retry once
+        if(String(e.message).startsWith('409')) await putOnce(); else throw e;
+      }
+      if(saveAgain){
+        // more clicks landed while saving — state already has them, so save once more
+        saveAgain = false; saving = false;
+        await save();
+        return;
+      }
+      dirty = false;
+      lastEtag = null; // next poll re-syncs and picks up the new ETag
+      setSync('Saved · live for everyone', 'ok');
+      stampFromState();
+    } catch(e){
+      const hint = String(e.message).startsWith('404') ? ' (404 usually means the token cannot see this repo — wrong resource owner or repo not selected)' :
+              String(e.message).startsWith('401') ? ' (401 = token invalid or expired)' :
+                      String(e.message).startsWith('403') ? ' (403 = no write permission or org policy blocked it)' : '';
+      setSync('Save failed: ' + e.message + hint, 'err');
+    } finally {
+      saving = false;
+    }
+  }
+  /* Debounced: rapid clicks collapse into a single save once clicking stops */
+  function scheduleSave(){
+    dirty = true;
+    setSync('Unsaved change…', 'busy');
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(save, SAVE_DEBOUNCE_MS);
+  }
+
+  /* Poll for other people's updates: every 10 s once a token is set, slower while
+     anonymous so viewers stay inside GitHub's 60 calls/hour. Skipped while you have
+     unsaved edits or a save in flight; backs off if rate limited. */
+  let pollPausedUntil = 0;
+  let polling = false;
+  const pollInterval = () => token ? CONFIG.pollMs : CONFIG.pollMsAnon;
+  async function poll(){
+    if(dirty || saving || polling || Date.now() < pollPausedUntil) return;
+    polling = true;
+    try{
+      const remote = await fetchRemote({ conditional:true });
+      if(remote.unchanged || remote.missing) return;
+      if(JSON.stringify(remote.data) !== JSON.stringify(state)){
+        state = remote.data;
+        render();
+      }
+      setSync('Live · synced', 'ok');
+    } catch(e){
+      if(e.rateLimited){
+        pollPausedUntil = e.resetAt || (Date.now() + 60000);
+        const mins = Math.max(1, Math.ceil((pollPausedUntil - Date.now())/60000));
+        setSync(`Live · rate limited, resuming in ~${mins} min`, 'busy');
+      }
+      /* transient network errors: keep last good state, try again next tick */
+    } finally {
+      polling = false;
+    }
+  }
+  /* Re-armed each tick so the cadence picks up a token added mid-session. */
+  (function schedulePoll(){
+    setTimeout(async ()=>{ await poll(); schedulePoll(); }, pollInterval());
+  })();
+
+  /* ---------- Interactions ---------- */
+  document.getElementById('board').addEventListener('click', e=>{
+    const b = e.target.closest('.badge');
+    if(!b) return;
+    const item = state.board[+b.dataset.ci].items[+b.dataset.ii];
+    item[1] = ORDER[(ORDER.indexOf(item[1])+1) % ORDER.length];
+    render();
+    scheduleSave();
+    // keep focus on the same badge after re-render so keyboard users can keep cycling
+    const again = document.querySelector(`.badge[data-ci="${b.dataset.ci}"][data-ii="${b.dataset.ii}"]`);
+    if(again) again.focus({preventScroll:true});
+  });
+
+  async function verifyToken(){
+    setSync('Testing token…', 'busy');
+    try{
+      const r = await fetch(`https://api.github.com/repos/${CONFIG.repo}`, { headers: authHeaders(), cache:'no-store' });
+      if(r.status === 401){ setSync('Token test: 401 — token invalid or expired', 'err'); return; }
+      if(r.status === 404){ setSync('Token test: 404 — token cannot see ' + CONFIG.repo + ' (check resource owner / repo selection)', 'err'); return; }
+      if(!r.ok){ setSync('Token test failed: HTTP ' + r.status, 'err'); return; }
+      const repo = await r.json();
+      if(repo.permissions && repo.permissions.push === false){
+        setSync('Token sees the repo but has NO write access — add Contents: read & write (or repo write access for your account)', 'err');
+        return;
+      }
+      setSync('Token OK — editing enabled', 'ok');
+    } catch(e){
+      setSync('Token test failed: ' + e.message, 'err');
+    }
+  }
+  document.getElementById('edit-btn').addEventListener('click', ()=>{
+    const t = prompt('Paste a GitHub token with Contents read & write access to\n' + CONFIG.repo + '\n\n(Fine-grained token scoped to only this repo is recommended.)');
+    if(!t) return;
+    token = t.trim();
+    try { localStorage.setItem('board-token', token); } catch(e) {}
+    document.getElementById('edit-btn').textContent = 'Change token';
+    verifyToken();
+  });
+  if(token) document.getElementById('edit-btn').textContent = 'Change token';
+
+  /* Snapshot: download the board exactly as data.json stores it — same bytes save()
+     would commit — as a point-in-time record you can keep or restore from. Read-only,
+     so it works without a token. */
+  document.getElementById('snapshot').addEventListener('click', ()=>{
+    const btn = document.getElementById('snapshot');
+    const stamp = new Date().toISOString().slice(0,16).replace('T','-').replace(':','');
+    const blob = new Blob([JSON.stringify(state, null, 2)], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = Object.assign(document.createElement('a'), { href:url, download:`data-${stamp}.json` });
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url), 1000);
+    btn.textContent = 'Snapshot saved';
+    setTimeout(()=>{ btn.textContent = 'Snapshot data.json'; }, 1800);
+  });
+
+  function tickCountdown(){
+    const ms = Math.max(0, GO_LIVE - Date.now());
+    const el = document.getElementById('countdown');
+    const h = Math.floor(ms/3600000), m = Math.floor(ms%3600000/60000), sec = Math.floor(ms%60000/1000);
+    const seg = (n,u) => `<span class="seg seg-${u}"><span class="n">${String(n).padStart(2,'0')}</span><span class="u">${u}</span></span>`;
+    el.innerHTML = seg(h,'h') + '<span class="sep">:</span>' + seg(m,'m') + '<span class="sep">:</span>' + seg(sec,'s');
+    el.className = 'countdown' + (ms === 0 ? ' live' : ms < 3600000 ? ' urgent' : ms < 6*3600000 ? ' soon' : '');
+    document.querySelector('.cd-label').textContent = ms > 0 ? 'until go-live' : 'go-live reached';
+  }
+
+  render();
+  loadBoard();
+  tickCountdown();
+  setInterval(tickCountdown, 1000);
+</script>
+</body>
+</html>
