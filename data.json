@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-06T10:30:15.106Z",
+  "updatedAt": "2026-09-06T11:29:59.200Z",
   "board": [
     {
       "name": "Argo CD",
@@ -153,7 +153,7 @@
         ],
         [
           "Logs / Metrics / Alerts",
-          "low"
+          "done"
         ],
         [
           "CI/CD",
