@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-06T10:26:42.773Z",
+  "updatedAt": "2026-09-06T10:26:52.459Z",
   "board": [
     {
       "name": "Argo CD",
@@ -65,7 +65,7 @@
         ],
         [
           "Data persistency",
-          "low"
+          "nb"
         ],
         [
           "Domain mapping",
