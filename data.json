@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-06T10:29:36.808Z",
+  "updatedAt": "2026-09-06T10:30:15.106Z",
   "board": [
     {
       "name": "Argo CD",
@@ -176,11 +176,11 @@
       "items": [
         [
           "GLM 5.3 MXFP4",
-          "done"
+          "nb"
         ],
         [
           "DeepSeek V4 Flash",
-          "done"
+          "nb"
         ]
       ]
     },
