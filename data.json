@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-07T04:11:27.492Z",
+  "updatedAt": "2026-09-08T07:58:48.312Z",
   "board": [
     {
       "name": "Argo CD",
@@ -238,7 +238,7 @@
         ],
         [
           "Security",
-          "low"
+          "done"
         ]
       ]
     },
@@ -265,7 +265,7 @@
         ],
         [
           "Security",
-          "low"
+          "done"
         ]
       ]
     },
@@ -292,7 +292,7 @@
         ],
         [
           "Security",
-          "low"
+          "done"
         ]
       ]
     },
@@ -307,7 +307,7 @@
         ],
         [
           "Desktop app release",
-          "low"
+          "done"
         ],
         [
           "Logs / Metrics / Alerts",
