@@ -1,319 +1,36 @@
 {
-  "updatedAt": "2026-09-08T07:58:48.312Z",
+  "updatedAt": null,
   "board": [
-    {
-      "name": "Argo CD",
-      "owner": "Linh Nguyen",
-      "group": "Infrastructure",
-      "items": [
-        [
-          "Production deployment",
-          "done"
-        ],
-        [
-          "Domain mapping",
-          "done"
-        ]
-      ]
-    },
-    {
-      "name": "K8s Cluster",
-      "owner": "Linh Nguyen",
-      "group": "Infrastructure",
-      "items": [
-        [
-          "Production deployment",
-          "done"
-        ],
-        [
-          "Logs / Metrics / Alerts",
-          "done"
-        ]
-      ]
-    },
-    {
-      "name": "CNPG",
-      "owner": "Linh Nguyen",
-      "group": "Infrastructure",
-      "items": [
-        [
-          "Production deployment",
-          "done"
-        ],
-        [
-          "Logs / Metrics / Alerts",
-          "done"
-        ],
-        [
-          "Data persistency",
-          "done"
-        ]
-      ]
-    },
-    {
-      "name": "Ceph",
-      "owner": "Xuan Son",
-      "group": "Infrastructure",
-      "items": [
-        [
-          "Production deployment",
-          "done"
-        ],
-        [
-          "Logs / Metrics / Alerts",
-          "nb"
-        ],
-        [
-          "Data persistency",
-          "done"
-        ],
-        [
-          "Domain mapping",
-          "done"
-        ]
-      ]
-    },
-    {
-      "name": "Monitoring",
-      "owner": "Hoang Bui",
-      "group": "Infrastructure",
-      "items": [
-        [
-          "Production deployment",
-          "done"
-        ],
-        [
-          "Functionality",
-          "done"
-        ],
-        [
-          "CI/CD",
-          "done"
-        ],
-        [
-          "Domain mapping",
-          "done"
-        ],
-        [
-          "Data persistency",
-          "done"
-        ],
-        [
-          "Platform integration",
-          "done"
-        ]
-      ]
-    },
-    {
-      "name": "MLOps — Inference",
-      "owner": "Linh Nguyen",
-      "group": "Services",
-      "items": [
-        [
-          "Functionality",
-          "done"
-        ],
-        [
-          "Logs / Metrics / Alerts",
-          "done"
-        ],
-        [
-          "Security",
-          "done"
-        ]
-      ]
-    },
-    {
-      "name": "MLOps — Training",
-      "owner": "Hoang Bui",
-      "group": "Services",
-      "items": [
-        [
-          "Functionality",
-          "done"
-        ],
-        [
-          "Logs / Metrics / Alerts",
-          "done"
-        ],
-        [
-          "Security",
-          "done"
-        ]
-      ]
-    },
-    {
-      "name": "MLOps — Shared",
-      "owner": "Hoang Bui",
-      "group": "Services",
-      "items": [
-        [
-          "Production deployment",
-          "done"
-        ],
-        [
-          "Logs / Metrics / Alerts",
-          "done"
-        ],
-        [
-          "CI/CD",
-          "done"
-        ],
-        [
-          "Domain mapping",
-          "done"
-        ],
-        [
-          "Platform integration",
-          "done"
-        ]
-      ]
-    },
-    {
-      "name": "Inference Models",
-      "owner": "MLOps Team",
-      "group": "Services",
-      "items": [
-        [
-          "GLM 5.3 MXFP4",
-          "done"
-        ],
-        [
-          "DeepSeek V4 Flash",
-          "done"
-        ]
-      ]
-    },
-    {
-      "name": "CAS",
-      "owner": "Huy",
-      "group": "Services",
-      "items": [
-        [
-          "Production deployment",
-          "done"
-        ],
-        [
-          "Functionality",
-          "done"
-        ],
-        [
-          "Logs / Metrics / Alerts",
-          "low"
-        ],
-        [
-          "CI/CD",
-          "nb"
-        ],
-        [
-          "Domain mapping",
-          "done"
-        ],
-        [
-          "Platform integration",
-          "done"
-        ]
-      ]
-    },
-    {
-      "name": "Landing App",
-      "owner": "Duy Hoang",
-      "group": "Front-End Apps",
-      "items": [
-        [
-          "Production deployment",
-          "done"
-        ],
-        [
-          "Content",
-          "done"
-        ],
-        [
-          "CI/CD",
-          "done"
-        ],
-        [
-          "Domain mapping",
-          "done"
-        ],
-        [
-          "Security",
-          "done"
-        ]
-      ]
-    },
-    {
-      "name": "Support App",
-      "owner": "Duy Hoang",
-      "group": "Front-End Apps",
-      "items": [
-        [
-          "Production deployment",
-          "done"
-        ],
-        [
-          "Functionality",
-          "done"
-        ],
-        [
-          "CI/CD",
-          "done"
-        ],
-        [
-          "Domain mapping",
-          "done"
-        ],
-        [
-          "Security",
-          "done"
-        ]
-      ]
-    },
-    {
-      "name": "Console App",
-      "owner": "Duy Hoang",
-      "group": "Front-End Apps",
-      "items": [
-        [
-          "Production deployment",
-          "done"
-        ],
-        [
-          "Functionality",
-          "done"
-        ],
-        [
-          "CI/CD",
-          "done"
-        ],
-        [
-          "Domain mapping",
-          "done"
-        ],
-        [
-          "Security",
-          "done"
-        ]
-      ]
-    },
-    {
-      "name": "Nexus Composer",
-      "owner": "Loc Mai",
-      "group": "Front-End Apps",
-      "items": [
-        [
-          "Functionality",
-          "done"
-        ],
-        [
-          "Desktop app release",
-          "done"
-        ],
-        [
-          "Logs / Metrics / Alerts",
-          "done"
-        ]
-      ]
-    }
+    { "name": "Duy Hoàng", "items": [
+      ["Landing page", "Address customer feedback", "track"],
+      ["Landing page", "Add Vietnamese version", "track"],
+      ["Support app", "Build email service", "track"],
+      ["Support app", "Integrate feature flag framework", "track"],
+      ["Console app", "Address customer feedback", "track"],
+      ["Nexus Composer", "Ramp up in September", "track"],
+      ["Nexus Composer", "Take over as primary owner from October", "track"] ]},
+    { "name": "Huy Hoàng", "items": [
+      ["Nexus Composer", "Build foundation for Mac, Windows and Linux", "track"],
+      ["Nexus Composer", "Give technical direction and feature roadmap from October", "track"],
+      ["CAS", "Set up CI/CD", "track"],
+      ["CAS", "Add SSO for Composer", "track"],
+      ["CAS", "Paginate GET endpoints", "track"] ]},
+    { "name": "Hoàng Bùi", "items": [
+      ["Cluster", "Set up alerts", "track"],
+      ["Cluster", "Harden monitoring flows", "track"],
+      ["Cluster", "Kargo", "track"],
+      ["Billing", "Dev complete", "done"],
+      ["Quota", "Dev complete", "done"],
+      ["MLOps", "Paginate GET endpoints", "track"],
+      ["MLOps", "Migrate to new billing and quota", "track"] ]},
+    { "name": "Linh Nguyen", "items": [
+      ["MLOps", "Harden all flows", "track"],
+      ["Console app", "Build leaderboard", "track"],
+      ["AIT", "Set up a new dedicated Prod region", "track"] ]},
+    { "name": "Son Do", "items": [
+      ["OpenStack", "Deliver first design draft", "track"] ]},
+    { "name": "Roadmap planning", "who": "Huy + Linh", "items": [
+      ["Q4/2026", "Product roadmap: OpenStack, CPU/GPU rental", "track"],
+      ["Q4/2026", "Hiring plan", "track"] ]}
   ]
 }
