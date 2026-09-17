@@ -29,8 +29,8 @@
       ["AIT", "Set up a new dedicated Prod region", "todo"] ]},
     { "name": "Son Do", "items": [
       ["OpenStack", "Deliver first design draft", "todo"] ]},
-    { "name": "Roadmap planning (Huy + Linh)", "items": [
-      ["Q4/2026", "Product roadmap: OpenStack, CPU/GPU rental", "todo"],
-      ["Q4/2026", "Hiring plan", "todo"] ]}
+    { "name": "Huy + Linh", "items": [
+      ["Roadmap planning Q4/2026", "Product roadmap: OpenStack, CPU/GPU rental", "todo"],
+      ["Roadmap planning Q4/2026", "Hiring plan", "todo"] ]}
   ]
 }
