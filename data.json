@@ -1,36 +1,160 @@
 {
-  "updatedAt": null,
+  "updatedAt": "2026-09-21T11:20:48.129Z",
   "board": [
-    { "name": "Duy Hoàng", "items": [
-      ["Landing page", "Address customer feedback", "todo"],
-      ["Landing page", "Add Vietnamese version", "todo"],
-      ["Support app", "Build email service", "todo"],
-      ["Support app", "Integrate feature flag framework", "todo"],
-      ["Console app", "Address customer feedback", "todo"],
-      ["Nexus Composer", "Ramp up in September", "todo"],
-      ["Nexus Composer", "Take over as primary owner from October", "todo"] ]},
-    { "name": "Huy Hoàng", "items": [
-      ["Nexus Composer", "Build foundation for Mac, Windows and Linux", "todo"],
-      ["Nexus Composer", "Give technical direction and feature roadmap from October", "todo"],
-      ["CAS", "Set up CI/CD", "todo"],
-      ["CAS", "Add SSO for Composer", "todo"],
-      ["CAS", "Paginate GET endpoints", "todo"] ]},
-    { "name": "Hoàng Bùi", "items": [
-      ["Cluster", "Set up alerts", "todo"],
-      ["Cluster", "Harden monitoring flows", "todo"],
-      ["Cluster", "Kargo", "todo"],
-      ["Billing", "Dev complete", "todo"],
-      ["Quota", "Dev complete", "todo"],
-      ["MLOps", "Paginate GET endpoints", "todo"],
-      ["MLOps", "Migrate to new billing and quota", "todo"] ]},
-    { "name": "Linh Nguyen", "items": [
-      ["MLOps", "Harden all flows", "todo"],
-      ["Console app", "Build leaderboard", "todo"],
-      ["AIT", "Set up a new dedicated Prod region", "todo"] ]},
-    { "name": "Son Do", "items": [
-      ["OpenStack", "Deliver first design draft", "todo"] ]},
-    { "name": "Huy + Linh", "items": [
-      ["Roadmap planning Q4/2026", "Product roadmap: OpenStack, CPU/GPU rental", "todo"],
-      ["Roadmap planning Q4/2026", "Hiring plan", "todo"] ]}
+    {
+      "name": "Duy Hoàng",
+      "items": [
+        [
+          "Landing page",
+          "Address customer feedback",
+          "todo"
+        ],
+        [
+          "Landing page",
+          "Add Vietnamese version",
+          "todo"
+        ],
+        [
+          "Support app",
+          "Build email service",
+          "todo"
+        ],
+        [
+          "Support app",
+          "Integrate feature flag framework",
+          "todo"
+        ],
+        [
+          "Console app",
+          "Address customer feedback",
+          "todo"
+        ],
+        [
+          "Nexus Composer",
+          "Ramp up in September",
+          "todo"
+        ],
+        [
+          "Nexus Composer",
+          "Take over as primary owner from October",
+          "todo"
+        ]
+      ]
+    },
+    {
+      "name": "Huy Hoàng",
+      "items": [
+        [
+          "Nexus Composer",
+          "Build foundation for Mac, Windows and Linux",
+          "todo"
+        ],
+        [
+          "Nexus Composer",
+          "Give technical direction and feature roadmap from October",
+          "todo"
+        ],
+        [
+          "CAS",
+          "Set up CI/CD",
+          "todo"
+        ],
+        [
+          "CAS",
+          "Add SSO for Composer",
+          "todo"
+        ],
+        [
+          "CAS",
+          "Paginate GET endpoints",
+          "todo"
+        ]
+      ]
+    },
+    {
+      "name": "Hoàng Bùi",
+      "items": [
+        [
+          "Cluster",
+          "Set up alerts",
+          "todo"
+        ],
+        [
+          "Cluster",
+          "Harden monitoring flows",
+          "todo"
+        ],
+        [
+          "Cluster",
+          "Kargo",
+          "todo"
+        ],
+        [
+          "Billing",
+          "Dev complete",
+          "todo"
+        ],
+        [
+          "Quota",
+          "Dev complete",
+          "todo"
+        ],
+        [
+          "MLOps",
+          "Paginate GET endpoints",
+          "todo"
+        ],
+        [
+          "MLOps",
+          "Migrate to new billing and quota",
+          "todo"
+        ]
+      ]
+    },
+    {
+      "name": "Linh Nguyen",
+      "items": [
+        [
+          "MLOps",
+          "Harden all flows",
+          "done"
+        ],
+        [
+          "Console app",
+          "Build leaderboard",
+          "done"
+        ],
+        [
+          "AIT",
+          "Set up a new dedicated Prod region",
+          "todo"
+        ]
+      ]
+    },
+    {
+      "name": "Son Do",
+      "items": [
+        [
+          "OpenStack",
+          "Deliver first design draft",
+          "todo"
+        ]
+      ]
+    },
+    {
+      "name": "Huy + Linh",
+      "items": [
+        [
+          "Roadmap planning Q4/2026",
+          "Product roadmap: OpenStack, CPU/GPU rental",
+          "todo"
+        ],
+        [
+          "Roadmap planning Q4/2026",
+          "Hiring plan",
+          "todo"
+        ]
+      ]
+    }
   ]
 }
