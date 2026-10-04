@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-04T08:33:06.607Z",
+  "updatedAt": "2026-10-04T08:33:19.259Z",
   "board": [
     {
       "name": "Duy Hoàng",
@@ -147,12 +147,12 @@
         [
           "Roadmap planning Q4/2026",
           "Product roadmap: OpenStack, CPU/GPU rental",
-          "todo"
+          "track"
         ],
         [
           "Roadmap planning Q4/2026",
           "Hiring plan",
-          "todo"
+          "track"
         ]
       ]
     }
